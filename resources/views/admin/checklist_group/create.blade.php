@@ -24,7 +24,7 @@
                         <div class="row mb-4">
                             <label for="name" class="col-sm-3 col-form-label">{{__('Checklist Group Name')}}:</label>
                             <div class="col-sm-6">
-                              <input type="text" class="form-control"  placeholder="{{__('Enter Checklist Group Name')}}" name="name">
+                              <input type="text" class="form-control"  placeholder="{{__('Enter Checklist Group Name')}}" name="name" value="{{old('name')}}">
                             </div>
                         </div>
 
