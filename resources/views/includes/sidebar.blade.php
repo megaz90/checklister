@@ -20,12 +20,38 @@
                 <li>
                     <a href="{{ route('admin.pages.index') }}" class="waves-effect">
                         <i class="bx bx-calendar"></i>
-                        <span key="t-calendar">Pages</span>
+                        <span key="t-calendar">{{ __('Pages') }}</span>
                     </a>
                 </li>
+                <li class="menu-title" key="t-components">{{__('Manage Checklists')}}</li>
+                <li>
+                    <a href="{{ route('admin.checklist_groups.create') }}" class="waves-effect">
+                        <i class="bx bx-plus"></i>
+                        <span>{{ __('New Checklist Group') }}</span>
+                    </a>
+                </li>
+                @foreach(\App\Models\ChecklistGroup::with('checklists')->get() as $group)
+                <li class="mm-active">
+                    <a href="{{ route('admin.checklist_groups.edit', $group->id) }}" class="has-arrow waves-effect">
+                        <i class="bx bx-list-ul"></i>
+                        <span>{{$group->name}}</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li>
+                            <a href="{{ route('admin.checklist_groups.checklists.create', $group) }}" class="waves-effect">
+                                <i class="bx bx-plus"></i>
+                                <span>{{ __('New Checklist') }}</span>
+                            </a>
+                        </li>
+                        @foreach($group->checklists as $checklist)
+                        <li><a href="{{ route('admin.checklist_groups.checklists.edit', [$group,$checklist]) }}"><i class="bx bx-list-ul"></i>{{ $checklist->name }}</a></li>
+                        @endforeach
+                    </ul>
+                </li>
+                @endforeach
                 @endif
 
-                <li class="menu-title" key="t-components">Components</li>
+                <li class="menu-title" key="t-components">{{__('Others')}}</li>
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
