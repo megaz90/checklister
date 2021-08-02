@@ -31,7 +31,7 @@
                         <div class="row mb-4">
                             <label for="description" class="col-sm-3 col-form-label">{{__('Task Description')}}:</label>
                             <div class="col-sm-6">
-                              <textarea class="form-control" name="description" cols="30" rows="7" placeholder="{{ __('Enter Description') }}">{{ $task->description }}</textarea>
+                              <textarea class="form-control" id="task-description" name="description" cols="30" rows="7" placeholder="{{ __('Enter Description') }}">{{ $task->description }}</textarea>
                             </div>
                         </div>
 
@@ -48,5 +48,12 @@
     </div>
 @endsection
 @section('scripts')
-    
+<script src="{{ asset('assets/libs/ckeditor/ckeditor.js') }}"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#task-description' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 @endsection

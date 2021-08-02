@@ -10,9 +10,9 @@
                 <li class="menu-title" key="t-menu">Menu</li>
 
                 <li>
-                    <a href="javascript: void(0);" class="waves-effect">
+                    <a href="{{ route('home') }}" class="waves-effect">
                         <i class="bx bx-home-circle"></i>
-                        <span key="t-dashboards">Dashboard</span>
+                        <span key="t-dashboards">{{__('Dashboard')}}</span>
                     </a>
                 </li>
 
@@ -68,6 +68,13 @@
                             </ul>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();" class="waves-effect">
+                        <i class="bx bx-home-circle"></i>
+                        <span key="t-dashboards">{{__('Logout')}}</span>
+                    </a>
                 </li>
 
             </ul>
