@@ -29,7 +29,11 @@
         </div>
 
         <div class="d-flex">
-
+            <div class="dropdown d-inline-block">
+                <button type="button" class="btn header-item waves-effect">
+                    <a href="{{ route('consultation') }}">Get Consultation</a>
+                </button>
+            </div>
             <div class="dropdown d-inline-block">
                 <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user" src="assets/images/users/avatar-1.jpg" alt="Header Avatar">

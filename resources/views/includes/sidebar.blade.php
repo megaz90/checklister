@@ -9,27 +9,9 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-menu">Menu</li>
 
-                <li>
-                    <a href="{{ route('home') }}" class="waves-effect">
-                        <i class="bx bx-home-circle"></i>
-                        <span key="t-dashboards">{{__('Dashboard')}}</span>
-                    </a>
-                </li>
 
                 @if(auth::user()->is_admin)
-                <li>
-                    <a href="{{ route('admin.pages.index') }}" class="waves-effect">
-                        <i class="bx bx-calendar"></i>
-                        <span key="t-calendar">{{ __('Pages') }}</span>
-                    </a>
-                </li>
                 <li class="menu-title" key="t-components">{{__('Manage Checklists')}}</li>
-                <li>
-                    <a href="{{ route('admin.checklist_groups.create') }}" class="waves-effect">
-                        <i class="bx bx-plus"></i>
-                        <span>{{ __('New Checklist Group') }}</span>
-                    </a>
-                </li>
                 @foreach(\App\Models\ChecklistGroup::with('checklists')->get() as $group)
                 <li class="mm-active">
                     <a href="{{ route('admin.checklist_groups.edit', $group->id) }}" class="has-arrow waves-effect">
@@ -49,8 +31,29 @@
                     </ul>
                 </li>
                 @endforeach
+                <li>
+                    <a href="{{ route('admin.checklist_groups.create') }}" class="waves-effect">
+                        <i class="bx bx-plus"></i>
+                        <span>{{ __('New Checklist Group') }}</span>
+                    </a>
+                </li>
+                <li class="menu-title" key="t-components">{{__('Pages')}}</li>
+                @foreach (\App\Models\Page::all() as $page)
+                <li>
+                    <a href="{{ route('admin.pages.edit', $page) }}" class="waves-effect">
+                        <i class="bx bx-home-circle"></i>
+                        <span key="t-dashboards">{{$page->title}}</span>
+                    </a>
+                </li>
+                @endforeach
+                <li class="menu-title" key="t-components">{{__('Manage User Data')}}</li>
+                <li>
+                    <a href="{{ route('admin.users.index') }}" class="waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-dashboards">{{__('Users')}}</span>
+                    </a>
+                </li>
                 @endif
-
                 <li class="menu-title" key="t-components">{{__('Others')}}</li>
 
                 <li>

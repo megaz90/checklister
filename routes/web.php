@@ -18,9 +18,13 @@ Auth::routes();
 
 Route::redirect('/', 'login');
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get('/welcome', [App\Http\Controllers\PageController::class, 'welcome'])->name('welcome');
+    Route::get('/get_consultation', [App\Http\Controllers\PageController::class, 'consultation'])->name('consultation');
+
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'is_admin'], function () {
-        Route::resource('pages', \App\Http\Controllers\Admin\PagesController::class);
+        Route::get('/users/index', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('users.index');
+        Route::resource('pages', \App\Http\Controllers\Admin\PagesController::class)->only(['edit', 'update']);
         Route::resource('checklist_groups', \App\Http\Controllers\Admin\ChecklistGroupController::class);
         Route::resource('checklist_groups.checklists', \App\Http\Controllers\Admin\ChecklistController::class);
         Route::resource('checklists.tasks', \App\Http\Controllers\Admin\TaskController::class);
