@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/welcome', [App\Http\Controllers\PageController::class, 'welcome'])->name('welcome');
     Route::get('/get_consultation', [App\Http\Controllers\PageController::class, 'consultation'])->name('consultation');
+    Route::get('/checklist/{checklist}', [App\Http\Controllers\User\ChecklistController::class, 'show'])->name('user.checklists.show');
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'is_admin'], function () {
         Route::get('/users/index', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('users.index');
