@@ -52,15 +52,29 @@
                 </li>
                 @else
                 <li class="menu-title" key="t-components">{{__('Checklists')}}</li>
-                @foreach(\App\Models\ChecklistGroup::with(['checklists' => function($query){ $query->whereNull('user_id');}])->get() as $group)
+                @foreach($user_menu as $group)
                 <li class="mm-active">
-                    <a href="#" class="has-arrow waves-effect">
+                    <a href="#" class="waves-effect">
                         <i class="bx bx-list-ul"></i>
-                        <span>{{$group->name}}</span>
+                        @if ($group['is_new'])
+                        <span class="badge rounded-pill bg-info float-end">New</span>
+                        @elseif($group['is_updated'])
+                        <span class="badge rounded-pill bg-info float-end">UPT</span>
+                        @endif
+                        <span>{{$group['name']}}</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
-                        @foreach($group->checklists as $checklist)
-                        <li><a href="{{ route('user.checklists.show', [$checklist]) }}"><i class="bx bx-list-ul"></i>{{ $checklist->name }}</a></li>
+                        @foreach($group['checklists'] as $checklist)
+                        <li>
+                            <a href="{{ route('user.checklists.show', [$checklist['id']]) }}">
+                                <i class="bx bx-list-ul"></i>
+                                @if ($checklist['is_new'])
+                                <span class="badge rounded-pill bg-info float-end">New</span>
+                                @elseif($checklist['is_updated'])
+                                <span class="badge rounded-pill bg-info float-end">UPT</span>
+                                @endif{{ $checklist['name'] }}
+                            </a>
+                        </li>
                         @endforeach
                     </ul>
                 </li>
