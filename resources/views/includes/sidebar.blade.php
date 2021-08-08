@@ -9,7 +9,7 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 @if(auth::user()->is_admin)
                 <li class="menu-title" key="t-components">{{__('Manage Checklists')}}</li>
-                @foreach(\App\Models\ChecklistGroup::with('checklists')->get() as $group)
+                @foreach($admin_menu as $group)
                 <li class="mm-active">
                     <a href="{{ route('admin.checklist_groups.edit', $group->id) }}" class="has-arrow waves-effect">
                         <i class="bx bx-list-ul"></i>

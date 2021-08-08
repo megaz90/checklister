@@ -8,7 +8,7 @@ class ChecklistService
 {
     public function sync_checklist(Checklist $checklist, int $id)
     {
-        return Checklist::firstOrCreate(
+        $checklist = Checklist::firstOrCreate(
             [
                 'user_id' => $id,
                 'checklist_id' => $checklist->id
@@ -18,5 +18,9 @@ class ChecklistService
                 'checklist_group_id' => $checklist->checklist_group_id,
             ]
         );
+
+        $checklist->touch();
+
+        return $checklist
     }
 }
