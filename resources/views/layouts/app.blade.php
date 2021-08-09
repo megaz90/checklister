@@ -51,6 +51,20 @@
 
         <!-- App js -->
         <script src="{{asset('assets/js/app.js')}}"></script>
+        <script>
+            const getData = async () => {
+                const result = await fetch("{{ route('menu.data') }}");
+                const data = await result.json();
+                data.admin_menu.forEach((menu) => {
+                    menu.checklists.forEach((checklist) => {
+                        let total = document.querySelector('.task-count-' + checklist.id)
+                        total.textContent = `${checklist.completed_tasks_count}/${checklist.tasks_count}`;
+                    });
+                });
+            };
+            getData();
+
+        </script>
         @yield('scripts')
 </body>
 

@@ -22,6 +22,8 @@ Route::group(['middleware' => ['auth', 'save_last_action_at']], function () {
     Route::get('/welcome', [App\Http\Controllers\PageController::class, 'welcome'])->name('welcome');
     Route::get('/get_consultation', [App\Http\Controllers\PageController::class, 'consultation'])->name('consultation');
     Route::get('/checklist/{checklist}', [App\Http\Controllers\User\ChecklistController::class, 'show'])->name('user.checklists.show');
+    Route::get('/menu/data', [App\Http\Controllers\MenuController::class, 'getMenuData'])->name('menu.data');
+    Route::get('/task/complete/{id}', [App\Http\Controllers\MenuController::class, 'getMenuData'])->name('task.complete');
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'is_admin'], function () {
         Route::get('/users/index', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('users.index');

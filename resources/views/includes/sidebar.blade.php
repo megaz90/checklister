@@ -17,7 +17,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         @foreach($group->checklists as $checklist)
-                        <li><a href="{{ route('admin.checklist_groups.checklists.edit', [$group,$checklist]) }}"><i class="bx bx-list-ul"></i>{{ $checklist->name }}</a></li>
+                        <li><a href="{{ route('admin.checklist_groups.checklists.edit', [$group,$checklist]) }}"><i class="bx bx-list-ul"></i>{{ $checklist->name }}<span class="badge rounded-pill bg-info float-end task-count-{{$checklist->id}}"></span></a></li>
                         @endforeach
                         <li>
                             <a href="{{ route('admin.checklist_groups.checklists.create', $group) }}" class="waves-effect">
@@ -69,10 +69,14 @@
                             <a href="{{ route('user.checklists.show', [$checklist['id']]) }}">
                                 <i class="bx bx-list-ul"></i>
                                 @if ($checklist['is_new'])
+                                <span class="badge rounded-pill bg-info float-end task-count-{{$checklist['id']}}"></span>
                                 <span class="badge rounded-pill bg-info float-end">New</span>
                                 @elseif($checklist['is_updated'])
+                                <span class="badge rounded-pill bg-info float-end task-count-{{$checklist['id']}}"></span>
                                 <span class="badge rounded-pill bg-info float-end">UPT</span>
-                                @endif{{ $checklist['name'] }}
+                                @endif
+                                <span class="badge rounded-pill bg-info float-end task-count-{{$checklist['id']}}"></span>
+                                {{ $checklist['name'] }}
                             </a>
                         </li>
                         @endforeach
