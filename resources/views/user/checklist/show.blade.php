@@ -12,11 +12,11 @@
                 </div>
                 <div class="card-body">
                     <div class="accordion" id="accordionExample">
-                        @foreach ($checklist->tasks as $task)
+                        @foreach ($checklist->tasks->whereNull('user_id') as $task)
                         <div class="row">
                         <div class="col-md-1">
                             {{-- <span class="fa fa-check mt-4"></span> --}}
-                            <input class="form-check-input mt-4" type="checkbox" data-id="{{ $task->id }}"/>
+                            <input class="form-check-input mt-4 task-check" type="checkbox" data-id={{ $task->id }} data-route="{{ route('task.complete' , $task->id) }}"/>
                         </div>
                         <div class="col-md-11">
                         <div class="accordion-item mt-2">
@@ -45,22 +45,43 @@
 @endsection
 @section('scripts')
     <script>
+
+        const checked = async() => {
+            const result = await fetch('{{ route("task.checkCompleted", $checklist) }}');
+            const data = await result.json();
+
+            let checkboxTasks = document.querySelectorAll(".task-check");
+
+            //Looping through each checkbox
+            for(let i = 0; i < checkboxTasks.length ; i++)
+            {
+                //Looping through api data array and comparing it with data-id set
+                data.find((ele)=>{
+                    if(checkboxTasks[i].dataset.id == ele){
+                        checkboxTasks[i].setAttribute('checked', true);
+                    }
+                });
+            }
+
+        }
+
+        window.addEventListener('load', checked);
+
         document.body.onclick = function (e)
         {
             if(e.target.type === 'checkbox')
             {
-                let id = e.target.getAttribute("data-id");
-                let url = `{{ route('task.complete', 'id'=> ${id}) }}`
-                console.log(url);
+                let url = e.target.getAttribute("data-route");
+                setTaskComplete(url);
             }else{
                 return;
             }
-            // console.log(e.target.getAttribute("data-id"));
         }
-        // let checkbox = document.querySelectorAll(".task-complete");
-        // checkbox.addEventListener('click',() => {
-        //     console.log(this);
-        // });
+        const setTaskComplete = async (url = "") => {
+            const result = await fetch(url);
+            const data = await result.json;
+            getData();
+        }
 
     </script>
 @endsection

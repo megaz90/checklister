@@ -3,19 +3,21 @@
 namespace App\Services;
 
 use App\Models\Checklist;
+use App\Models\ChecklistGroup;
 use Carbon\Carbon;
 
 class MenuService
 {
     public function menuData()
     {
-        $menu = \App\Models\ChecklistGroup::with([
+        $menu = ChecklistGroup::with([
             'checklists' => function ($query) {
                 $query->whereNull('user_id');
             },
             'checklists.tasks' => function ($query) {
                 $query->whereNull('tasks.user_id');
             },
+            'checklists.user_tasks',
         ])
             ->get();
 
@@ -39,7 +41,7 @@ class MenuService
                     $checklist['is_new'] = !($group['is_new']) && Carbon::create($checklist['created_at'])->greaterThan($checklist_updated_at);
                     $checklist['is_updated'] = !($group['is_new']) && !($group['is_updated']) && !($checklist['is_new']) && Carbon::create($checklist['updated_at'])->greaterThan($checklist_updated_at);
                     $checklist['tasks_count'] = count($checklist['tasks']);
-                    $checklist['completed_tasks_count'] = 0;
+                    $checklist['completed_tasks_count'] = count($checklist['user_tasks']);
                 }
                 $groups[] = $group;
             }
