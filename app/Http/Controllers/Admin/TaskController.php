@@ -94,7 +94,10 @@ class TaskController extends Controller
         $task = Task::find($id);
         //Replicate the collection found from "Task::find" without attribute id but fillable with id.
         if ($task) {
-            $user_task = Task::where('task_id', $id)->first();
+            $user_task = Task::where('task_id', $id)
+                ->where('user_id', auth()->id)
+                ->first();
+
             if ($user_task) {
                 if (is_null($user_task->completed_at)) {
                     $user_task->update(['completed_at' => now()]);
