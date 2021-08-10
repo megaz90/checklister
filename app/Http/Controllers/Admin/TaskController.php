@@ -95,7 +95,7 @@ class TaskController extends Controller
         //Replicate the collection found from "Task::find" without attribute id but fillable with id.
         if ($task) {
             $user_task = Task::where('task_id', $id)
-                ->where('user_id', auth()->id)
+                ->where('user_id', auth()->user()->id)
                 ->first();
 
             if ($user_task) {

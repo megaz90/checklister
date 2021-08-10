@@ -4,6 +4,7 @@
     
 @endsection
 @section('content')
+@include('includes.tasks_status')
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
@@ -44,8 +45,10 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="{{ asset('assets/libs/apexcharts/apexcharts.min.js') }}"></script>
     <script>
 
+        //Marking Task as True
         const checked = async() => {
             const result = await fetch('{{ route("task.checkCompleted", $checklist) }}');
             const data = await result.json();
@@ -64,8 +67,41 @@
             }
 
         }
-
+        //Loading checked tasks and marking them as checked
         window.addEventListener('load', checked);
+
+        //Getting all cheklist data from DB
+        const getAllData = async() => {
+            const result = await fetch('{{ route("checklistGroupData", $checklist) }}');
+            const data = await result.json();
+
+            var getData = '';
+            data.forEach((checklist) => {
+                const {user_tasks_count, tasks_count, id, name} = checklist;
+                let pctg = user_tasks_count/tasks_count *100;
+                if(isNaN(pctg))
+                {
+                    pctg = 0;
+                }
+                const allData = `<div class="col-md-3 mt-3">
+                                    <h5 class="font-size-13">${name}</h5>
+                                    <p class="total_count">${user_tasks_count}/${tasks_count}</p>
+                                    <div class="progress progress-md">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: ${pctg}%;" 
+                                    aria-valuenow="${pctg}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>`;
+
+                
+                getData += allData;
+            });
+
+            const output = document.getElementById("output");
+            output.innerHTML = getData;
+
+        }
+
+        window.addEventListener('load', getAllData);
 
         document.body.onclick = function (e)
         {
@@ -81,6 +117,7 @@
             const result = await fetch(url);
             const data = await result.json;
             getData();
+            getAllData();
         }
 
     </script>

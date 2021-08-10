@@ -22,6 +22,11 @@ class Checklist extends Model
         return $this->hasMany(Task::class)->where('user_id', auth()->user()->id);
     }
 
+    public function checklist_group()
+    {
+        return $this->belongsTo(ChecklistGroup::class);
+    }
+
     // public function all_completed_tasks()
     // {
     //     return $this->hasMany(Task::class)->whereNotNull('completed_at');

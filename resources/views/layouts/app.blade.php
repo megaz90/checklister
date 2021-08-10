@@ -50,7 +50,6 @@
         <script src="{{asset('assets/js/pages/dashboard.init.js')}}"></script>
 
         <!-- App js -->
-        <script src="{{asset('assets/js/app.js')}}"></script>
         <script>
             const getData = async () => {
                 const result = await fetch("{{ route('menu.data') }}");
@@ -63,9 +62,10 @@
                 });
             };
             getData();
-
-        </script>
+            
+            </script>
         @yield('scripts')
+        <script src="{{asset('assets/js/app.js')}}"></script>
 </body>
 
 </html>

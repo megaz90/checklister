@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreChecklistGroupRequest;
 use App\Http\Requests\UpdateChecklistGroupRequest;
+use App\Models\Checklist;
 use App\Models\ChecklistGroup;
 use Illuminate\Http\Request;
 
@@ -87,5 +88,20 @@ class ChecklistGroupController extends Controller
     {
         $checklistGroup->delete();
         return redirect()->route('welcome');
+    }
+
+    public function getAllData(Checklist $checklist)
+    {
+        $data = Checklist::where('checklist_group_id', $checklist->checklist_group_id)
+            ->whereNull('user_id')
+            ->withCount(['tasks' => function ($query) {
+                $query->whereNull('user_id');
+            },])
+            ->withCount([('user_tasks') => function ($query) {
+                $query->whereNotNull('completed_at');
+            }])
+            ->get();
+
+        return response()->json($data);
     }
 }
