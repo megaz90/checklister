@@ -13,7 +13,13 @@
                 </div>
                 <div class="card-body">
                     <div class="accordion" id="accordionExample">
+                        @if (count($checklist->tasks) === 0)
+                            <h2 class="text-center">No Tasks Found</h2>
+                        @else
                         @foreach ($checklist->tasks->whereNull('user_id') as $task)
+                        @if ($task->name == '')
+                            <h2 class="text-center">No Task Found</h2>
+                        @endif
                         <div class="row">
                         <div class="col-md-1">
                             {{-- <span class="fa fa-check mt-4"></span> --}}
@@ -37,6 +43,7 @@
                     </div>
                 </div>
                         @endforeach
+                        @endif
                 </div>
                 </div>
                 <!-- end card body -->
