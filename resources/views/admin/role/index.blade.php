@@ -8,7 +8,7 @@
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-3 text-center">{{__('List of Users')}}</h4>
+                    <h4 class="card-title mb-3 text-center">{{__('List of Roles')}}</h4>
                     
                     <div class="table-responsive">
                         <table class="table mb-0 text-center">
@@ -17,25 +17,25 @@
                                 <tr>
                                     <th>Created At</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Website</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (count($users) == 0)
+                                @if (count($roles) == 0)
                                     <tr>
-                                        <td colspan="4" class="test-center"><h3>No User Found</h3></td>
+                                        <td colspan="4" class="test-center"><h3>No Role Found</h3></td>
                                     </tr>
                                 @else
-                                @foreach ($users as $user)
+                                @foreach ($roles as $role)
                                 <tr>
-                                    <td>{{$user->created_at}}</td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
-                                    <td>{{ $user->website ? $user->website : 'N/A' }}</td>
+                                    <td>{{ $role->created_at }}</td>
+                                    <td>{{ $role->name }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.roles.edit', $role) }}" class="btn btn-sm btn-success" title="Edit Role"><span class="fa fa-edit"></span></a>
+                                    </td>
                                 </tr>
                                 @endforeach
-                                {{$users->links()}}
+                                {{$roles->links()}}
                                 @endif
                             </tbody>
                         </table>

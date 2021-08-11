@@ -64,7 +64,7 @@
                                         <td colspan="4" class="test-center"><h3>No Task Found</h3></td>
                                     </tr>
                                 @else
-                                @foreach ($checklist->tasks as $task)
+                                @foreach ($checklist->tasks->whereNull('user_id') as $task)
                                 <tr>
                                     <td>{{$task->name}}</td>
                                     <td>{!! $task->description !!}</td>

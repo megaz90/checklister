@@ -45,11 +45,27 @@
                 @endforeach
                 <li class="menu-title" key="t-components">{{__('Manage User Data')}}</li>
                 <li>
-                    <a href="{{ route('admin.users.index') }}" class="waves-effect">
-                        <i class="bx bx-user"></i>
-                        <span key="t-dashboards">{{__('Users')}}</span>
-                    </a>
+                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-user"></i> Users</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('admin.users.create') }}" key="t-horizontal">Add User</a></li>
+                        <li><a href="{{ route('admin.users.index') }}" key="t-horizontal">All Users</a></li>
+                    </ul>
                 </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-users"></i> Role</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('admin.roles.create') }}" key="t-horizontal">Add Role</a></li>
+                        <li><a href="{{ route('admin.roles.index') }}" key="t-horizontal">All Roles</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-user-lock"></i> Permission</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('admin.permissions.create') }}" key="t-horizontal">Add Permission</a></li>
+                        <li><a href="{{ route('admin.permissions.index') }}" key="t-horizontal">All Permissions</a></li>
+                    </ul>
+                </li>
+                
                 @else
                 <li class="menu-title" key="t-components">{{__('Checklists')}}</li>
                 @foreach($user_menu as $group)

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckRoleMiddleware;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\SaveLastActionMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -66,5 +67,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'is_admin' => IsAdmin::class,
         'save_last_action_at' => SaveLastActionMiddleware::class,
+        'check_role' => CheckRoleMiddleware::class,
     ];
 }

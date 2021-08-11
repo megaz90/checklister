@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class PermissionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::where('is_admin', 0)->latest()->paginate(10);
-        return view('admin.user.index', compact('users'));
+        //
     }
 
     /**
@@ -27,7 +24,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        return view('admin.permission.create');
     }
 
     /**
@@ -36,10 +33,9 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
-        User::create($request->validated());
-        return redirect()->route('welcome');
+        //
     }
 
     /**

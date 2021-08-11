@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
-use App\Models\User;
+use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRoleRequest;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+use function PHPUnit\Framework\returnSelf;
+
+class RolesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +19,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::where('is_admin', 0)->latest()->paginate(10);
-        return view('admin.user.index', compact('users'));
+        $roles = Role::latest()->paginate(10);
+        return view('admin.role.index', compact('roles'));
     }
 
     /**
@@ -27,7 +30,7 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        return view('admin.role.create');
     }
 
     /**
@@ -36,10 +39,10 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreRoleRequest $request)
     {
-        User::create($request->validated());
-        return redirect()->route('welcome');
+        Role::create($request->validated());
+        return redirect()->back();
     }
 
     /**
@@ -59,9 +62,9 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        //
+        return view('admin.role.edit', compact('role'));
     }
 
     /**
@@ -71,9 +74,10 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
-        //
+        $role->update($request->validated());
+        return redirect()->route('admin.roles.index');
     }
 
     /**
