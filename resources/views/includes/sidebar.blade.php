@@ -52,6 +52,13 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-lock"></i> Authorization</a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('admin.assign.role-user.create') }}" key="t-horizontal">Assign Roles to Users</a></li>
+                        <li><a href="{{ route('admin.assign.permission-role.create') }}" key="t-horizontal">Assign Permissions to Roles</a></li>
+                    </ul>
+                </li>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-users"></i> Role</a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li><a href="{{ route('admin.roles.create') }}" key="t-horizontal">Add Role</a></li>

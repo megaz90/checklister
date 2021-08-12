@@ -27,7 +27,7 @@ Route::group(['middleware' => ['auth', 'save_last_action_at']], function () {
     Route::get('/task/completed/{checklist}', [App\Http\Controllers\Admin\TaskController::class, 'completedTasks'])->name('task.checkCompleted');
     Route::get('/checklist/all/{checklist}', [App\Http\Controllers\Admin\ChecklistGroupController::class, 'getAllData'])->name('checklistGroupData');
 
-    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'is_admin'], function () {
+    Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => 'is_admin'], function () {
         // Route::get('/users/index', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('users.index');
         Route::resource('pages', \App\Http\Controllers\Admin\PagesController::class)->only(['edit', 'update']);
         Route::resource('checklist_groups', \App\Http\Controllers\Admin\ChecklistGroupController::class);
@@ -36,5 +36,10 @@ Route::group(['middleware' => ['auth', 'save_last_action_at']], function () {
         Route::resource('users', \App\Http\Controllers\Admin\UsersController::class);
         Route::resource('roles', \App\Http\Controllers\Admin\RolesController::class);
         Route::resource('permissions', \App\Http\Controllers\Admin\PermissionsController::class)->middleware('check_role');
+
+        Route::group(['prefix' => '/authorize', 'as' => 'assign.'], function () {
+            Route::get('/role-to-user/create', [\App\Http\Controllers\Admin\AuthorizationController::class, 'roleUserCreate'])->name('role-user.create');
+            Route::get('/permission-to-role/create', [\App\Http\Controllers\Admin\AuthorizationController::class, 'permissionRoleCreate'])->name('permission-role.create');
+        });
     });
 });

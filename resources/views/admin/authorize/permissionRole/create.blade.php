@@ -22,14 +22,14 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4 text-center mb-5">{{__('New Permission')}}</h4>
+                    <h4 class="card-title mb-4 text-center mb-5">{{__('Assign Permissions to Role')}}</h4>
 
-                    <form action="{{ route('admin.permissions.store') }}" method="POST">
+                    <form action="{{ route('admin.roles.store') }}" method="POST">
                         @csrf
                         <div class="row mb-4">
-                            <label for="name" class="col-sm-3 col-form-label">{{__('Permission Name')}}:</label>
+                            <label for="name" class="col-sm-3 col-form-label">{{__('Role Name')}}:</label>
                             <div class="col-sm-6">
-                              <input type="text" class="form-control"  placeholder="{{__('Enter Permission Name')}}" name="name" value="{{old('name')}}">
+                              <input type="text" class="form-control"  placeholder="{{__('Enter Role Name')}}" name="name" value="{{old('name')}}">
                             </div>
                         </div>
 
