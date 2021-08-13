@@ -35,9 +35,12 @@ Route::group(['middleware' => ['auth', 'save_last_action_at']], function () {
         Route::resource('checklists.tasks', \App\Http\Controllers\Admin\TaskController::class);
         Route::resource('users', \App\Http\Controllers\Admin\UsersController::class);
         Route::resource('roles', \App\Http\Controllers\Admin\RolesController::class);
-        Route::resource('permissions', \App\Http\Controllers\Admin\PermissionsController::class)->middleware('check_role');
+        Route::resource('permissions', \App\Http\Controllers\Admin\PermissionsController::class)->middleware('check_role_exist');
 
-        Route::group(['prefix' => '/authorize', 'as' => 'assign.'], function () {
+        Route::get('/reauth/show', [App\Http\Controllers\Auth\ReauthenticateController::class, 'reauth_show'])->name('reauth.show');
+        Route::post('/reauth/check', [App\Http\Controllers\Auth\ReauthenticateController::class, 'reauth_check'])->name('reauth.check');
+
+        Route::group(['prefix' => '/authorize', 'as' => 'assign.', 'middleware' => 'admin_reauthenticate'], function () {
             Route::get('/role-to-user/create', [\App\Http\Controllers\Admin\AuthorizationController::class, 'roleUserCreate'])->name('role-user.create');
             Route::get('/permission-to-role/create', [\App\Http\Controllers\Admin\AuthorizationController::class, 'permissionRoleCreate'])->name('permission-role.create');
         });

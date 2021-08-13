@@ -6,9 +6,7 @@ use App\Models\Role;
 use Closure;
 use Illuminate\Http\Request;
 
-use function PHPUnit\Framework\returnSelf;
-
-class CheckRoleMiddleware
+class CheckRoleExistMiddleware
 {
     /**
      * Handle an incoming request.
