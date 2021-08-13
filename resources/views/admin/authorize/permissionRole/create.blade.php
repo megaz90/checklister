@@ -20,18 +20,37 @@
                    <h3>{{ Session::get('info') }}</h3>
                 </div>
             @endif
+            @if (\Session::has('error'))
+                <div class="alert alert-danger">
+                   <h3>{{ Session::get('error') }}</h3>
+                </div>
+            @endif
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title mb-4 text-center mb-5">{{__('Assign Permissions to Role')}}</h4>
 
-                    <form action="{{ route('admin.roles.store') }}" method="POST">
+                    <form action="{{ route('admin.assign.permission-role.store') }}" method="POST">
                         @csrf
                         <div class="row mb-4">
                             <label for="name" class="col-sm-3 col-form-label">{{__('Role Name')}}:</label>
                             <div class="col-sm-6">
-                              <input type="text" class="form-control"  placeholder="{{__('Enter Role Name')}}" name="name" value="{{old('name')}}">
+                              <select name="role_id" class="form-select" id="role">
+                                  <option value="" disabled selected>--Select Role--</option>
+                                  @foreach ($roles as $role)
+                                      <option value="{{ $role['id'] }}" data-route="{{ route('admin.assign.permission-role.getPermissions', $role['id']) }}">{{ $role['name'] }}</option>
+                                  @endforeach
+                              </select>
                             </div>
                         </div>
+                        <h5 class="text-center m-5">Permissions</h5>
+                        @foreach ($permissions as $permission)
+                            <div class="form-check form-check-primary mb-3">
+                                <input class="form-check-input" type="checkbox" name="permission_ids[]" value="{{ $permission->id }}">
+                                <label class="form-check-label" for="{{$permission->name}}">
+                                    {{$permission->name}}
+                                </label>
+                            </div>
+                        @endforeach
 
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary w-md">{{__('Create')}}</button>
@@ -43,7 +62,21 @@
             <!-- end card -->
         </div>
     </div>
+    </div>
+</div>
 @endsection
 @section('scripts')
-    
+    <script>
+        var role = document.getElementById('role');
+        role.addEventListener('change', function(){
+            let url = role.options[role.selectedIndex].getAttribute('data-route');
+            getPermissions(url);
+        });
+
+        const getPermissions = async (url = '') => {
+            let result = await fetch(url);
+            let data = await result.json();
+            console.log(data);
+        }
+    </script>
 @endsection

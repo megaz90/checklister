@@ -18,7 +18,6 @@ Auth::routes();
 
 Route::redirect('/', 'login');
 Route::group(['middleware' => ['auth', 'save_last_action_at']], function () {
-
     Route::get('/welcome', [App\Http\Controllers\PageController::class, 'welcome'])->name('welcome');
     Route::get('/get_consultation', [App\Http\Controllers\PageController::class, 'consultation'])->name('consultation');
     Route::get('/checklist/{checklist}', [App\Http\Controllers\User\ChecklistController::class, 'show'])->name('user.checklists.show');
@@ -28,7 +27,6 @@ Route::group(['middleware' => ['auth', 'save_last_action_at']], function () {
     Route::get('/checklist/all/{checklist}', [App\Http\Controllers\Admin\ChecklistGroupController::class, 'getAllData'])->name('checklistGroupData');
 
     Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => 'is_admin'], function () {
-        // Route::get('/users/index', [App\Http\Controllers\Admin\UsersController::class, 'index'])->name('users.index');
         Route::resource('pages', \App\Http\Controllers\Admin\PagesController::class)->only(['edit', 'update']);
         Route::resource('checklist_groups', \App\Http\Controllers\Admin\ChecklistGroupController::class);
         Route::resource('checklist_groups.checklists', \App\Http\Controllers\Admin\ChecklistController::class);
@@ -40,9 +38,11 @@ Route::group(['middleware' => ['auth', 'save_last_action_at']], function () {
         Route::get('/reauth/show', [App\Http\Controllers\Auth\ReauthenticateController::class, 'reauth_show'])->name('reauth.show');
         Route::post('/reauth/check', [App\Http\Controllers\Auth\ReauthenticateController::class, 'reauth_check'])->name('reauth.check');
 
-        Route::group(['prefix' => '/authorize', 'as' => 'assign.', 'middleware' => 'admin_reauthenticate'], function () {
+        Route::group(['prefix' => '/authorize', 'as' => 'assign.', 'middleware' => ['admin_reauthenticate', 'check_role_exist']], function () {
             Route::get('/role-to-user/create', [\App\Http\Controllers\Admin\AuthorizationController::class, 'roleUserCreate'])->name('role-user.create');
             Route::get('/permission-to-role/create', [\App\Http\Controllers\Admin\AuthorizationController::class, 'permissionRoleCreate'])->name('permission-role.create');
+            Route::post('/permission-to-role/store', [\App\Http\Controllers\Admin\AuthorizationController::class, 'permissionRoleStore'])->name('permission-role.store');
+            Route::get('/permission-to-role/getPermissions/{id}', [\App\Http\Controllers\Admin\AuthorizationController::class, 'getPermissions'])->name('permission-role.getPermissions');
         });
     });
 });
