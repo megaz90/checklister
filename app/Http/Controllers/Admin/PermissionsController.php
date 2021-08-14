@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
 use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class PermissionsController extends Controller
@@ -39,7 +40,12 @@ class PermissionsController extends Controller
      */
     public function store(StorePermissionRequest $request)
     {
-        Permission::create($request->validated());
+        $permission = Permission::create($request->validated());
+
+        //Super Admin seeded
+        $super_admin = Role::find(1);
+        $super_admin->permissions()->attach($permission->id);
+
         return redirect()->back();
     }
 

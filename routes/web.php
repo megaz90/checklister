@@ -39,10 +39,23 @@ Route::group(['middleware' => ['auth', 'save_last_action_at']], function () {
         Route::post('/reauth/check', [App\Http\Controllers\Auth\ReauthenticateController::class, 'reauth_check'])->name('reauth.check');
 
         Route::group(['prefix' => '/authorize', 'as' => 'assign.', 'middleware' => ['admin_reauthenticate', 'check_role_exist']], function () {
-            Route::get('/role-to-user/create', [\App\Http\Controllers\Admin\AuthorizationController::class, 'roleUserCreate'])->name('role-user.create');
-            Route::get('/permission-to-role/create', [\App\Http\Controllers\Admin\AuthorizationController::class, 'permissionRoleCreate'])->name('permission-role.create');
-            Route::post('/permission-to-role/store', [\App\Http\Controllers\Admin\AuthorizationController::class, 'permissionRoleStore'])->name('permission-role.store');
-            Route::get('/permission-to-role/getPermissions/{id}', [\App\Http\Controllers\Admin\AuthorizationController::class, 'getPermissions'])->name('permission-role.getPermissions');
+
+            Route::group(['prefix' => '/role-to-user', 'as' => 'role-user.'], function () {
+                Route::get('/create', [\App\Http\Controllers\Admin\RolesUsersController::class, 'roleUserCreate'])->name('create');
+                Route::post('/store', [\App\Http\Controllers\Admin\RolesUsersController::class, 'roleUserStore'])->name('store');
+                Route::get('/getRoles/{id}', [\App\Http\Controllers\Admin\RolesUsersController::class, 'getRoles'])->name('getRoles');
+                Route::get('/edit', [\App\Http\Controllers\Admin\RolesUsersController::class, 'roleUserEdit'])->name('edit');
+                Route::post('/update', [\App\Http\Controllers\Admin\RolesUsersController::class, 'roleUserUpdate'])->name('update');
+            });
+
+            Route::group(['prefix' => '/permission-to-role', 'as' => 'permission-role.'], function () {
+                Route::get('/create', [\App\Http\Controllers\Admin\PermissionsRolesController::class, 'permissionRoleCreate'])->name('create');
+                Route::post('/store', [\App\Http\Controllers\Admin\PermissionsRolesController::class, 'permissionRoleStore'])->name('store');
+                Route::get('/getPermissions/{id}', [\App\Http\Controllers\Admin\PermissionsRolesController::class, 'getPermissions'])->name('getPermissions');
+                Route::get('/edit', [\App\Http\Controllers\Admin\PermissionsRolesController::class, 'permissionRoleEdit'])->name('edit');
+                Route::post('/update', [\App\Http\Controllers\Admin\PermissionsRolesController::class, 'permissionRoleUpdate'])->name('update');
+            });
         });
     });
 });
+//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

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Session;
 
 class ReauthenticateController extends Controller
 {
@@ -24,7 +25,8 @@ class ReauthenticateController extends Controller
 
         if (Hash::check($request->password, $user->password)) {
             session(['reauth' => TRUE]);
-            return redirect()->route('admin.assign.permission-role.create');
+            $route = Session::get('route-redirect');
+            return redirect()->route($route);
         }
 
         return redirect()->route('admin.reauth.show')->with('error', 'Password not Matched');

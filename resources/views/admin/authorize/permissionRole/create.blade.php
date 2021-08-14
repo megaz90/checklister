@@ -45,7 +45,7 @@
                         <h5 class="text-center m-5">Permissions</h5>
                         @foreach ($permissions as $permission)
                             <div class="form-check form-check-primary mb-3">
-                                <input class="form-check-input" type="checkbox" name="permission_ids[]" value="{{ $permission->id }}">
+                                <input class="form-check-input permissions" type="checkbox" name="permission_ids[]" value="{{ $permission->id }}">
                                 <label class="form-check-label" for="{{$permission->name}}">
                                     {{$permission->name}}
                                 </label>
@@ -70,13 +70,30 @@
         var role = document.getElementById('role');
         role.addEventListener('change', function(){
             let url = role.options[role.selectedIndex].getAttribute('data-route');
+            let permissions = document.querySelectorAll(".permissions");
+
+            //Setting Every checkbox to unchecked
+            permissions.forEach((permission) => {
+                permission.checked = false;
+            });
+
             getPermissions(url);
         });
 
         const getPermissions = async (url = '') => {
             let result = await fetch(url);
             let data = await result.json();
-            console.log(data);
+            
+            let permissions = document.querySelectorAll(".permissions");
+            for(let i = 0; i < permissions.length; i++){
+                data.forEach((id) => {
+                if(permissions[i].value == id){
+                    //Setting specific checbox to checked
+                    permissions[i].checked = true;
+                }
+                });
+            }
+
         }
     </script>
 @endsection
