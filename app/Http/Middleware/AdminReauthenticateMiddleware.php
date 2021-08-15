@@ -21,7 +21,7 @@ class AdminReauthenticateMiddleware
             Session::put('route-redirect', $request->route()->getName());
             return redirect()->route('admin.reauth.show');
         } elseif (auth()->user()->is_admin == TRUE && session()->get('reauth') == TRUE) {
-            // Forget a single key...
+            // Forget a single key.
             Session::forget('route-redirect');
             return $next($request);
         } else {
