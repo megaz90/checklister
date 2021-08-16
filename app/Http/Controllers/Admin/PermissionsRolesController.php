@@ -58,12 +58,7 @@ class PermissionsRolesController extends Controller
 
     public function permissionRoleEdit()
     {
-        if (auth()->user()->is_super_admin == TRUE) {
-            $roles = Role::where('id', '!=', 1)->get();
-        } else {
-            $roles = Role::where('id', '!=', 1)
-                ->get();
-        }
+        $roles = Role::where('id', '!=', 1)->get();
         $permissions = Permission::all();
 
         return view('admin.authorize.permissionRole.edit', compact(['roles', 'permissions']));

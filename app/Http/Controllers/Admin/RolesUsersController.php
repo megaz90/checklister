@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RolesUsersRequest;
+use App\Http\Requests\UpdateRoleUserRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -37,7 +38,7 @@ class RolesUsersController extends Controller
             $arr[] = $role->id;       // Creating New Array in order to compare it with incoming request array
         }
 
-        //Making an array of only those permission IDs which are not saved in DB before.
+        //Making an array of only those role IDs which are not saved in DB before.
         $result = array_diff($request->role_ids, $arr);
 
         if (count($result) > 0) {
@@ -61,12 +62,12 @@ class RolesUsersController extends Controller
     public function roleUserEdit()
     {
         $users = User::all();
-        $roles = Role::all();
+        $roles = Role::where('id', '!=', 1)->get();
 
         return view('admin.authorize.roleUser.edit', compact(['users', 'roles']));
     }
 
-    public function roleUserUpdate(RolesUsersRequest $request)
+    public function roleUserUpdate(UpdateRoleUserRequest $request)
     {
         $users = User::with('roles')->get();
 

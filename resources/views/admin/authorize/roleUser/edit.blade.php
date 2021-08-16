@@ -27,27 +27,27 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4 text-center mb-5">{{__('Edit Permissions Roles')}}</h4>
+                    <h4 class="card-title mb-4 text-center mb-5">{{__('Edit Roles Users')}}</h4>
 
-                    <form action="{{ route('admin.assign.permission-role.update') }}" method="POST">
+                    <form action="{{ route('admin.assign.role-user.update') }}" method="POST">
                         @csrf
                         <div class="row mb-4">
                             <label for="name" class="col-sm-3 col-form-label">{{__('Role Name')}}:</label>
                             <div class="col-sm-6">
-                              <select name="role_id" class="form-select" id="role">
+                              <select name="user_id" class="form-select" id="user">
                                   <option value="" disabled selected>--Select Role--</option>
-                                  @foreach ($roles as $role)
-                                      <option value="{{ $role->id }}" data-route="{{ route('admin.assign.permission-role.getPermissions', $role->id) }}">{{ $role->name }}</option>
+                                  @foreach ($users as $user)
+                                      <option value="{{ $user->id }}" data-route="{{ route('admin.assign.role-user.getRoles', $user->id) }}">{{ $user->name }}</option>
                                   @endforeach
                               </select>
                             </div>
                         </div>
-                        <h5 class="text-center m-5">Permissions</h5>
-                        @foreach ($permissions as $permission)
+                        <h5 class="text-center m-5">Roles</h5>
+                        @foreach ($roles as $role)
                             <div class="form-check form-check-primary mb-3">
-                                <input class="form-check-input permissions" type="checkbox" name="permission_ids[]" value="{{ $permission->id }}">
-                                <label class="form-check-label" for="{{$permission->name}}">
-                                    {{$permission->name}}
+                                <input class="form-check-input roles" type="checkbox" name="role_ids[]" value="{{ $role->id }}">
+                                <label class="form-check-label" for="{{$role->name}}">
+                                    {{$role->name}}
                                 </label>
                             </div>
                         @endforeach
@@ -67,29 +67,29 @@
 @endsection
 @section('scripts')
     <script>
-        var role = document.getElementById('role');
-        role.addEventListener('change', function(){
-            let url = role.options[role.selectedIndex].getAttribute('data-route');
-            let permissions = document.querySelectorAll(".permissions");
+        var user = document.getElementById('user');
+        user.addEventListener('change', function(){
+            let url = user.options[user.selectedIndex].getAttribute('data-route');
+            let roles = document.querySelectorAll(".roles");
 
             //Setting Every checkbox to unchecked
-            permissions.forEach((permission) => {
-                permission.checked = false;
+            roles.forEach((role) => {
+                role.checked = false;
             });
 
-            getPermissions(url);
+            getRoles(url);
         });
 
-        const getPermissions = async (url = '') => {
+        const getRoles = async (url = '') => {
             let result = await fetch(url);
             let data = await result.json();
             
-            let permissions = document.querySelectorAll(".permissions");
-            for(let i = 0; i < permissions.length; i++){
+            let roles = document.querySelectorAll(".roles");
+            for(let i = 0; i < roles.length; i++){
                 data.forEach((id) => {
-                if(permissions[i].value == id){
+                if(roles[i].value == id){
                     //Setting specific checbox to checked
-                    permissions[i].checked = true;
+                    roles[i].checked = true;
                 }
                 });
             }

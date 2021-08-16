@@ -37,7 +37,7 @@
                               <select name="user_id" class="form-select" id="user">
                                   <option value="" disabled selected>--Select user--</option>
                                   @foreach ($users as $user)
-                                      <option value="{{ $user['id'] }}" data-route="{{ route('admin.assign.role-user.getRoles', $user['id']) }}">{{ $user['name'] }}</option>
+                                      <option value="{{ $user['id'] }}" data-route="{{ route('admin.assign.role-user.getRoles', $user['id']) }}" @if($user['is_super_admin']) style="color:red; text-transform:uppercase;" @endif>{{ $user['name'] }}</option>
                                   @endforeach
                               </select>
                             </div>

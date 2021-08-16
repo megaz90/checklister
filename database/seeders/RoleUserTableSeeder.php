@@ -15,10 +15,9 @@ class RoleUserTableSeeder extends Seeder
      */
     public function run()
     {
-        foreach (User::all() as $user) {
-            foreach (Role::all() as $role) {
-                $user->roles()->attach($role->id);
-            }
+        $user = User::all()->first();
+        foreach (Role::all() as $role) {
+            $user->roles()->attach($role->id);
         }
     }
 }
