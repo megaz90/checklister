@@ -16,7 +16,6 @@ class PermissionRoleTableSeeder extends Seeder
     public function run()
     {
         foreach (Role::all() as $role) {
-
             foreach (Permission::all() as $permission) {
                 $role->permissions()->attach($permission->id);
             }

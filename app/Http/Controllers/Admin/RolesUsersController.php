@@ -12,7 +12,10 @@ class RolesUsersController extends Controller
 {
     public function roleUserCreate()
     {
-        $roles = Role::all()->toArray();
+        $roles = Role::where('id', '!=', 1)
+            ->get()
+            ->toArray();
+
         if (auth()->user()->is_super_admin == TRUE) {
             $users = User::all()->toArray();
         } else {

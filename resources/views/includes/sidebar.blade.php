@@ -45,14 +45,14 @@
                 @endforeach
                 <li class="menu-title" key="t-components">{{__('Manage User Data')}}</li>
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-user"></i> Users</a>
+                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-user"></i> <span>Users</span></a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li><a href="{{ route('admin.users.create') }}" key="t-horizontal">Add User</a></li>
                         <li><a href="{{ route('admin.users.index') }}" key="t-horizontal">All Users</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-lock"></i> Authorization</a>
+                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-lock"></i><span> Authorization</span></a>
                     <ul class="sub-menu" aria-expanded="true">
                             <li>
                                 <a href="javascript: void(0);" class="has-arrow" key="t-level-1-2">Role User</a>
@@ -72,14 +72,14 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-users"></i> Role</a>
+                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-users"></i><span> Role</span></a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li><a href="{{ route('admin.roles.create') }}" key="t-horizontal">Add Role</a></li>
                         <li><a href="{{ route('admin.roles.index') }}" key="t-horizontal">All Roles</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-user-lock"></i> Permission</a>
+                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-user-lock"></i><span> Permission</span></a>
                     <ul class="sub-menu" aria-expanded="true">
                         <li><a href="{{ route('admin.permissions.create') }}" key="t-horizontal">Add Permission</a></li>
                         <li><a href="{{ route('admin.permissions.index') }}" key="t-horizontal">All Permissions</a></li>
