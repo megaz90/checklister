@@ -31,6 +31,7 @@ class UpdatePermissionRequest extends FormRequest
                 'max:255',
                 Rule::unique('permissions')->ignore($this->permission),
             ],
+            'implemented_id' => ['required', 'integer'],
         ];
     }
 }

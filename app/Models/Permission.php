@@ -17,4 +17,9 @@ class Permission extends Model
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
+
+    public function implemented_permission()
+    {
+        return $this->hasOne(ImplementedPermissions::class);
+    }
 }

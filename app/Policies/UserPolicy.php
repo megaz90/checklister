@@ -9,6 +9,26 @@ class UserPolicy
 {
     use HandlesAuthorization;
 
+
+    public function check(User $user, User $model, string $type)
+    {
+        $data = User::with('roles.permissions.implemented_permission')->find(auth()->user()->id);
+        if ($user->is_super_admin == TRUE) {
+            return $user;
+        }
+
+        foreach ($data->roles as $role) {
+            foreach ($role->permissions as $permission) {
+                if ($permission->implemented_permission == null) {
+                    return false;
+                }
+                if ($permission->implemented_permission->name === $type) {
+                    return $user;
+                }
+            }
+        }
+    }
+
     /**
      * Determine whether the user can view any models.
      *
@@ -17,7 +37,9 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        $data = $this->check($user, $user, "user_access");
+
+        return $data != false && $user;
     }
 
     /**
@@ -27,9 +49,11 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, User $model)
+    public function view(User $user)
     {
-        //
+        $data = $this->check($user, $user, "user_show");
+
+        return $data != false && $user;
     }
 
     /**
@@ -40,12 +64,9 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        $roles = $user->roles;
-        foreach ($roles as $role) {
-            foreach ($role->permissions as $permission) {
-            }
-        }
-        return $user->is_super_admin == TRUE;
+        $data = $this->check($user, $user, "user_create");
+
+        return $data != false && $user;
     }
 
     /**

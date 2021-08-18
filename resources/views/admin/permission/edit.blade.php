@@ -29,6 +29,18 @@
                             </div>
                         </div>
 
+                        <div class="row mb-4">
+                            <label for="name" class="col-sm-3 col-form-label">{{__('Permission Assigning To:')}}:</label>
+                            <div class="col-sm-6">
+                              <select name="implemented_id" class="form-select">
+                                  <option value="" disabled selected>--Select Model--</option>
+                                  @foreach ($implemented_permissions as $implemented_permission)
+                                      <option value="{{ $implemented_permission['id'] }}" @if($implemented_permission['permission_id'] === $permission->id) selected @endif> {{ ucwords(preg_replace('/_/i', ' ', $implemented_permission['name']))  }}</option>
+                                  @endforeach
+                              </select>
+                            </div>
+                        </div>
+
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary w-md">{{__('Update')}}</button>
                         </div>

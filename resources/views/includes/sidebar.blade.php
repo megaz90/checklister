@@ -1,6 +1,5 @@
 <!-- ========== Left Sidebar Start ========== -->
 <div class="vertical-menu">
-
     <div data-simplebar class="h-100">
 
         <!--- Sidemenu -->
@@ -44,12 +43,16 @@
                 </li>
                 @endforeach
                 <li class="menu-title" key="t-components">{{__('Manage User Data')}}</li>
-                @can('create', \App\Models\User::class)
+                @can('viewAny', \App\Models\User::class)
                 <li>
                     <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-user"></i> <span>Users</span></a>
                     <ul class="sub-menu" aria-expanded="true">
+                        @can('create', \App\Models\User::class)
                         <li><a href="{{ route('admin.users.create') }}" key="t-horizontal">Add User</a></li>
+                        @endcan
+                        @can('view', \App\Models\User::class)
                         <li><a href="{{ route('admin.users.index') }}" key="t-horizontal">All Users</a></li>
+                        @endcan
                     </ul>
                 </li>
                 @endcan
