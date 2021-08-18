@@ -44,6 +44,7 @@
                 </li>
                 @endforeach
                 <li class="menu-title" key="t-components">{{__('Manage User Data')}}</li>
+                @can('create', \App\Models\User::class)
                 <li>
                     <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-user"></i> <span>Users</span></a>
                     <ul class="sub-menu" aria-expanded="true">
@@ -51,6 +52,7 @@
                         <li><a href="{{ route('admin.users.index') }}" key="t-horizontal">All Users</a></li>
                     </ul>
                 </li>
+                @endcan
                 <li>
                     <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-lock"></i><span> Authorization</span></a>
                     <ul class="sub-menu" aria-expanded="true">
