@@ -55,7 +55,7 @@ class RolePolicy extends AuthorizationService
      * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(Role $role)
+    public function update($role)
     {
         $data = $this->check($role, "role_edit");
         return $data == true;

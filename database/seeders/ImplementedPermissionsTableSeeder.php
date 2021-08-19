@@ -15,6 +15,7 @@ class ImplementedPermissionsTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
+            'authorization_access',
             'user_access',
             'user_create',
             'user_show',
@@ -40,6 +41,12 @@ class ImplementedPermissionsTableSeeder extends Seeder
             'checklist_show',
             'checklist_delete',
             'checklist_edit',
+            'permission_to_role_access',
+            'permission_to_role_create',
+            'permission_to_role_edit',
+            'role_to_user_access',
+            'role_to_user_create',
+            'role_to_user_edit',
         ];
 
         foreach ($permissions as $permission) {

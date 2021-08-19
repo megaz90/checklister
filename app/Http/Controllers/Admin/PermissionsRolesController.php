@@ -13,6 +13,8 @@ class PermissionsRolesController extends Controller
 {
     public function permissionRoleCreate()
     {
+        $this->authorize('create', Permission::class);
+
         if (auth()->user()->is_super_admin == TRUE) {
             $roles = Role::all()->toArray();
         } else {
@@ -58,6 +60,8 @@ class PermissionsRolesController extends Controller
 
     public function permissionRoleEdit()
     {
+        $this->authorize('update', Permission::class);
+
         $roles = Role::where('id', '!=', 1)->get();
         $permissions = Permission::all();
 

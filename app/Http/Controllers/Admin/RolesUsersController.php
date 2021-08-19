@@ -7,12 +7,15 @@ use App\Http\Requests\RolesUsersRequest;
 use App\Http\Requests\UpdateRoleUserRequest;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\RoleUser;
 use App\Models\User;
 
 class RolesUsersController extends Controller
 {
     public function roleUserCreate()
     {
+        $this->authorize('create', RoleUser::class);
+
         $roles = Role::where('id', '!=', 1)
             ->get()
             ->toArray();
@@ -61,6 +64,8 @@ class RolesUsersController extends Controller
 
     public function roleUserEdit()
     {
+        $this->authorize('update', RoleUser::class);
+
         $users = User::all();
         $roles = Role::where('id', '!=', 1)->get();
 

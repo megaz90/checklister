@@ -6,6 +6,12 @@ use App\Models\User;
 
 class AuthorizationService
 {
+    /**
+     * @param Model Instance 
+     * @param String $type (Implemented Permission)
+     * @return boolean
+     */
+
     protected function check($model, string $type)
     {
         $user = auth()->user();

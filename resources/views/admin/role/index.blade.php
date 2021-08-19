@@ -31,7 +31,11 @@
                                     <td>{{ $role->created_at }}</td>
                                     <td>{{ $role->name }}</td>
                                     <td>
+                                        @can('update', $role)
                                         <a href="{{ route('admin.roles.edit', $role) }}" class="btn btn-sm btn-success" title="Edit Role"><span class="fa fa-edit"></span></a>
+                                        @else
+                                        <p><strong>(Not Authorized)</strong></p>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

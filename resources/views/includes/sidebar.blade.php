@@ -56,26 +56,40 @@
                     </ul>
                 </li>
                 @endcan
+                @can('viewAny', \App\Models\Authorization::class)
                 <li>
                     <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-lock"></i><span> Authorization</span></a>
                     <ul class="sub-menu" aria-expanded="true">
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow" key="t-level-1-2">Role User</a>
-                                <ul class="sub-menu" aria-expanded="true">
+                        @can('viewAny', \App\Models\RoleUser::class)
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow" key="t-level-1-2">Role User</a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                @can('create', \App\Models\RoleUser::class)
                                     <li><a href="{{ route('admin.assign.role-user.create') }}" key="t-horizontal">Assign Roles to Users</a></li>
+                                @endcan
+                                @can('update', \App\Models\RoleUser::class)
                                     <li><a href="{{ route('admin.assign.role-user.edit') }}" key="t-horizontal">Edit Roles Users </a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow" key="t-level-1-2">Permission Role</a>
-                                <ul class="sub-menu" aria-expanded="true">
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
+                        @can('viewAny', \App\Models\PermissionRole::class)
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow" key="t-level-1-2">Permission Role</a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                @can('create', \App\Models\PermissionRole::class)
                                     <li><a href="{{ route('admin.assign.permission-role.create') }}" key="t-horizontal">Assign Permissions to Roles</a></li>
+                                @endcan
+                                @can('update', \App\Models\PermissionRole::class)
                                     <li><a href="{{ route('admin.assign.permission-role.edit') }}" key="t-horizontal">Edit Permissions Roles</a></li>
+                                @endcan
 
-                                </ul>
-                            </li>
+                            </ul>
+                        </li>
+                        @endcan
                     </ul>
                 </li>
+                @endcan
                 @can('viewAny', \App\Models\Role::class)
                 <li>
                     <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-users"></i><span> Role</span></a>

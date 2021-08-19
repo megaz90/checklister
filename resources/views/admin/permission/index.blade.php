@@ -31,7 +31,7 @@
                                     <td>{{ $permission->created_at }}</td>
                                     <td>{{ $permission->name }}</td>    
                                     <td>
-                                        @can('updatePermission', User::class, $permission)
+                                        @can('update', $permission)
                                         <a href="{{ route('admin.permissions.edit', $permission) }}" class="btn btn-sm btn-success" title="Edit Permission"><span class="fa fa-edit"></span></a>
                                         @else
                                         <p><strong>(Not Authorized)</strong></p>
