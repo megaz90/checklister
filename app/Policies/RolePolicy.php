@@ -2,11 +2,12 @@
 
 namespace App\Policies;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Services\AuthorizationService;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy extends AuthorizationService
+class RolePolicy extends AuthorizationService
 {
     use HandlesAuthorization;
 
@@ -16,25 +17,23 @@ class UserPolicy extends AuthorizationService
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny($role)
     {
-        $data = $this->check($user, "user_access");
-
-        return $data != false && $user;
+        $data = $this->check($role, "role_access");
+        return $data == true;
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user)
+    public function view($role)
     {
-        $data = $this->check($user, "user_show");
-
-        return $data != false && $user;
+        $data = $this->check($role, "role_show");
+        return $data == true;
     }
 
     /**
@@ -43,33 +42,33 @@ class UserPolicy extends AuthorizationService
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create($role)
     {
-        $data = $this->check($user, "user_create");
-
-        return $data != false && $user;
+        $data = $this->check($role, "role_create");
+        return $data == true;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update(Role $role)
     {
-        //
+        $data = $this->check($role, "role_edit");
+        return $data == true;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, Role $role)
     {
         //
     }
@@ -78,10 +77,10 @@ class UserPolicy extends AuthorizationService
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, User $model)
+    public function restore(User $user, Role $role)
     {
         //
     }
@@ -90,10 +89,10 @@ class UserPolicy extends AuthorizationService
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Role  $role
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, User $model)
+    public function forceDelete(User $user, Role $role)
     {
         //
     }

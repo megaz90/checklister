@@ -76,20 +76,32 @@
                             </li>
                     </ul>
                 </li>
+                @can('viewAny', \App\Models\Role::class)
                 <li>
                     <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-users"></i><span> Role</span></a>
                     <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('admin.roles.create') }}" key="t-horizontal">Add Role</a></li>
-                        <li><a href="{{ route('admin.roles.index') }}" key="t-horizontal">All Roles</a></li>
+                        @can('create', \App\Models\Role::class)
+                            <li><a href="{{ route('admin.roles.create') }}" key="t-horizontal">Add Role</a></li>
+                        @endcan
+                        @can('view', \App\Models\Role::class)
+                            <li><a href="{{ route('admin.roles.index') }}" key="t-horizontal">All Roles</a></li>
+                        @endcan
                     </ul>
                 </li>
+                @endcan
+                @can('viewAny', \App\Models\Permission::class)
                 <li>
                     <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-user-lock"></i><span> Permission</span></a>
                     <ul class="sub-menu" aria-expanded="true">
+                        @can('create', \App\Models\Permission::class)
                         <li><a href="{{ route('admin.permissions.create') }}" key="t-horizontal">Add Permission</a></li>
+                        @endcan
+                        @can('view', \App\Models\Permission::class)
                         <li><a href="{{ route('admin.permissions.index') }}" key="t-horizontal">All Permissions</a></li>
+                        @endcan
                     </ul>
                 </li>
+                @endcan
                 
                 @else
                 <li class="menu-title" key="t-components">{{__('Checklists')}}</li>

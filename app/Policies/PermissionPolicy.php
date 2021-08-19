@@ -2,11 +2,12 @@
 
 namespace App\Policies;
 
+use App\Models\Permission;
 use App\Models\User;
 use App\Services\AuthorizationService;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy extends AuthorizationService
+class PermissionPolicy extends AuthorizationService
 {
     use HandlesAuthorization;
 
@@ -16,25 +17,24 @@ class UserPolicy extends AuthorizationService
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function viewAny(User $user)
+    public function viewAny($permission)
     {
-        $data = $this->check($user, "user_access");
-
-        return $data != false && $user;
+        $data = $this->check($permission, "permission_access");
+        return $data == true;
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user)
+    public function view($permission)
     {
-        $data = $this->check($user, "user_show");
+        $data = $this->check($permission, "permission_show");
 
-        return $data != false && $user;
+        return $data == true;
     }
 
     /**
@@ -43,33 +43,34 @@ class UserPolicy extends AuthorizationService
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create($permission)
     {
-        $data = $this->check($user, "user_create");
+        $data = $this->check($permission, "permission_create");
 
-        return $data != false && $user;
+        return $data == true;
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, User $model)
+    public function update($permission)
     {
-        //
+        $data = $this->check($permission, "permission_edit");
+        return $data == true;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, Permission $permission)
     {
         //
     }
@@ -78,10 +79,10 @@ class UserPolicy extends AuthorizationService
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, User $model)
+    public function restore(User $user, Permission $permission)
     {
         //
     }
@@ -90,10 +91,10 @@ class UserPolicy extends AuthorizationService
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, User $model)
+    public function forceDelete(User $user, Permission $permission)
     {
         //
     }

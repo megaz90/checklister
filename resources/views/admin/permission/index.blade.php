@@ -29,9 +29,13 @@
                                 @foreach ($permissions as $permission)
                                 <tr>
                                     <td>{{ $permission->created_at }}</td>
-                                    <td>{{ $permission->name }}</td>
+                                    <td>{{ $permission->name }}</td>    
                                     <td>
+                                        @can('updatePermission', User::class, $permission)
                                         <a href="{{ route('admin.permissions.edit', $permission) }}" class="btn btn-sm btn-success" title="Edit Permission"><span class="fa fa-edit"></span></a>
+                                        @else
+                                        <p><strong>(Not Authorized)</strong></p>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

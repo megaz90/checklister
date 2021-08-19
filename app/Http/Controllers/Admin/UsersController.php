@@ -16,6 +16,8 @@ class UsersController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', User::class);
+
         $users = User::latest()->paginate(10);
         return view('admin.user.index', compact('users'));
     }
@@ -28,6 +30,7 @@ class UsersController extends Controller
     public function create()
     {
         $this->authorize('create', User::class);
+
         return view('admin.user.create');
     }
 

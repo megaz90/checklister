@@ -18,6 +18,8 @@ class PermissionsController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Permission::class);
+
         $permissions = Permission::latest()->paginate(10);
         return view('admin.permission.index', compact('permissions'));
     }
@@ -29,6 +31,8 @@ class PermissionsController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Permission::class);
+
         $implemented_permissions = ImplementedPermissions::whereNull('permission_id')
             ->get()
             ->toArray();
@@ -77,6 +81,8 @@ class PermissionsController extends Controller
      */
     public function edit(Permission $permission)
     {
+        $this->authorize('update', $permission);
+
         $implemented_permissions = ImplementedPermissions::whereNull('permission_id')
             ->orWhere('permission_id', $permission->id)
             ->get()

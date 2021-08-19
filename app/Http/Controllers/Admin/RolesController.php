@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use function PHPUnit\Framework\returnSelf;
@@ -19,6 +20,8 @@ class RolesController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Role::class);
+
         $roles = Role::latest()->paginate(10);
         return view('admin.role.index', compact('roles'));
     }
@@ -30,6 +33,8 @@ class RolesController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Role::class);
+
         return view('admin.role.create');
     }
 
@@ -64,6 +69,8 @@ class RolesController extends Controller
      */
     public function edit(Role $role)
     {
+        $this->authorize('edit', $role);
+
         return view('admin.role.edit', compact('role'));
     }
 
