@@ -28,6 +28,7 @@ class ChecklistGroupController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', ChecklistGroup::class);
         return view('admin.checklist_group.create');
     }
 
@@ -62,6 +63,8 @@ class ChecklistGroupController extends Controller
      */
     public function edit(ChecklistGroup $checklistGroup)
     {
+        $this->authorize('update', ChecklistGroup::class);
+
         return view('admin.checklist_group.edit', compact('checklistGroup'));
     }
 
@@ -75,6 +78,7 @@ class ChecklistGroupController extends Controller
     public function update(UpdateChecklistGroupRequest $request, ChecklistGroup $checklistGroup)
     {
         $checklistGroup->update($request->validated());
+
         return redirect()->route('welcome');
     }
 
@@ -86,6 +90,8 @@ class ChecklistGroupController extends Controller
      */
     public function destroy(ChecklistGroup $checklistGroup)
     {
+        $this->authorize('delete', ChecklistGroup::class);
+
         $checklistGroup->delete();
         return redirect()->route('welcome');
     }

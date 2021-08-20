@@ -9,6 +9,8 @@
                 @if(auth::user()->is_admin)
                 <li class="menu-title" key="t-components">{{__('Manage Checklists')}}</li>
                 @foreach($admin_menu as $group)
+
+                @can('update', \App\Models\ChecklistGroup::class)
                 <li class="mm-active">
                     <a href="{{ route('admin.checklist_groups.edit', $group->id) }}" class="has-arrow waves-effect">
                         <i class="bx bx-list-ul"></i>
@@ -16,23 +18,33 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="true">
                         @foreach($group->checklists as $checklist)
-                        <li><a href="{{ route('admin.checklist_groups.checklists.edit', [$group,$checklist]) }}"><i class="bx bx-list-ul"></i>{{ $checklist->name }}<span class="badge rounded-pill bg-info float-end task-count-{{$checklist->id}}"></span></a></li>
+                        @can('update', \App\Models\Checklist::class)
+                            <li><a href="{{ route('admin.checklist_groups.checklists.edit', [$group,$checklist]) }}"><i class="bx bx-list-ul"></i>{{ $checklist->name }}<span class="badge rounded-pill bg-info float-end task-count-{{$checklist->id}}"></span></a></li>
+                        @endcan
                         @endforeach
+                        @can('create', \App\Models\Checklist::class)
                         <li>
                             <a href="{{ route('admin.checklist_groups.checklists.create', $group) }}" class="waves-effect">
                                 <i class="bx bx-plus"></i>
                                 <span>{{ __('New Checklist') }}</span>
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </li>
+                @endcan
+
                 @endforeach
+
+                @can('create', \App\Models\ChecklistGroup::class)
                 <li>
                     <a href="{{ route('admin.checklist_groups.create') }}" class="waves-effect">
                         <i class="bx bx-plus"></i>
                         <span>{{ __('New Checklist Group') }}</span>
                     </a>
                 </li>
+                @endcan
+
                 <li class="menu-title" key="t-components">{{__('Pages')}}</li>
                 @foreach (\App\Models\Page::all() as $page)
                 <li>
