@@ -38,6 +38,8 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request, Checklist $checklist)
     {
+        $this->authorize('create', Checklist::class);
+
         $checklist->tasks()->create($request->validated());
         return redirect()->route('admin.checklist_groups.checklists.edit', [$checklist->checklist_group_id, $checklist]);
     }
@@ -61,6 +63,8 @@ class TaskController extends Controller
      */
     public function edit(Checklist $checklist, Task $task)
     {
+        $this->authorize('update', Checklist::class);
+
         return view('admin.task.edit', compact('checklist', 'task'));
     }
 
@@ -85,6 +89,8 @@ class TaskController extends Controller
      */
     public function destroy(Checklist $checklist, Task $task)
     {
+        $this->authorize('delete', Checklist::class);
+
         $task->delete();
         return redirect()->route('admin.checklist_groups.checklists.edit', [$checklist->checklist_group_id, $checklist]);
     }

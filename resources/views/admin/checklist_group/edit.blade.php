@@ -33,13 +33,15 @@
                             <button type="submit" class="btn btn-primary w-md">{{__('Update')}}</button>
                         </div>
                     </form>
-                    <form action="{{ route('admin.checklist_groups.destroy', $checklistGroup) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-danger w-md">{{__('Delete')}}</button>
-                        </div>
-                    </form>
+                    @can('delete', \App\Models\ChecklistGroup::class)
+                        <form action="{{ route('admin.checklist_groups.destroy', $checklistGroup) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <div class="d-flex justify-content-center mt-3">
+                                <button type="submit" class="btn btn-danger w-md">{{__('Delete')}}</button>
+                            </div>
+                        </form>
+                    @endcan
                 </div>
                 <!-- end card body -->
             </div>
