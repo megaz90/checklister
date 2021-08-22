@@ -75,7 +75,7 @@
 
                                 </form>
                             </div>
-
+                            <a href="{{ route('register') }}">Register Now</a>
                         </div>
                     </div>
                     <div class="mt-5 text-center">
