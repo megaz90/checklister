@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
 use App\Models\Checklist;
 use App\Models\Task;
+use App\Services\TaskService\TaskService;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -97,38 +98,14 @@ class TaskController extends Controller
 
     public function completeTask($id)
     {
-        $task = Task::find($id);
-        //Replicate the collection found from "Task::find" without attribute id but fillable with id.
-        if ($task) {
-            $user_task = Task::where('task_id', $id)
-                ->where('user_id', auth()->user()->id)
-                ->first();
-
-            if ($user_task) {
-                if (is_null($user_task->completed_at)) {
-                    $user_task->update(['completed_at' => now()]);
-                }
-            } else {
-                $user_task = $task->replicate();
-                $user_task['task_id'] = $task->id;
-                $user_task['user_id'] = auth()->user()->id;
-                $user_task['completed_at'] = now();
-                $user_task->save();
-                return response()->json(TRUE);
-            }
-        } else {
-            return response()->json(FALSE);
-        }
+        $result = (new TaskService())->setTaskComtplete($id);
+        return response()->json($result);
     }
 
     public function completedTasks(Checklist $checklist)
     {
-        $completed_tasks = Task::where('checklist_id', $checklist->id)
-            ->where('user_id', auth()->user()->id)
-            ->whereNotNull('completed_at')
-            ->pluck('task_id')      // Getting only Task id using "pluck()"
-            ->toArray();
+        $result = (new TaskService())->getCompletedTasks($checklist);
 
-        return response()->json($completed_tasks);
+        return response()->json($result);
     }
 }

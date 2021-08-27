@@ -8,6 +8,7 @@ use App\Http\Requests\UpdatePermissionRequest;
 use App\Models\ImplementedPermissions;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Services\PermissionService\PermissionService;
 
 class PermissionsController extends Controller
 {
@@ -33,9 +34,7 @@ class PermissionsController extends Controller
     {
         $this->authorize('create', Permission::class);
 
-        $implemented_permissions = ImplementedPermissions::whereNull('permission_id')
-            ->get()
-            ->toArray();
+        $implemented_permissions = (new PermissionService())->createData();
 
         return view('admin.permission.create', compact('implemented_permissions'));
     }
@@ -48,17 +47,7 @@ class PermissionsController extends Controller
      */
     public function store(StorePermissionRequest $request)
     {
-        $permission = Permission::create([
-            'name' => $request->name
-        ]);
-
-        $implemented_permission = ImplementedPermissions::find($request->implemented_id)
-            ->update(['permission_id' => $permission->id]);
-
-        //Super Admin seeded
-        $super_admin = Role::find(1);
-        $super_admin->permissions()->attach($permission->id);
-
+        (new PermissionService())->storeData($request);
         return redirect()->back();
     }
 
@@ -83,11 +72,7 @@ class PermissionsController extends Controller
     {
         $this->authorize('update', $permission);
 
-        $implemented_permissions = ImplementedPermissions::whereNull('permission_id')
-            ->orWhere('permission_id', $permission->id)
-            ->get()
-            ->toArray();
-
+        $implemented_permissions = (new PermissionService())->editData($permission);
         return view('admin.permission.edit', compact('permission', 'implemented_permissions'));
     }
 
@@ -100,16 +85,7 @@ class PermissionsController extends Controller
      */
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
-        //Deleting Old Assigned Permission Id and assiging it NULL
-        $old = ImplementedPermissions::find($permission->implemented_permission->id);
-        $old->permission_id = null;
-        $old->save();
-
-        $permission->update(['name' => $request->name]);
-
-        $implemented_permission = ImplementedPermissions::find($request->implemented_id)
-            ->update(['permission_id' => $permission->id]);
-
+        (new PermissionService())->updateData($request, $permission);
         return redirect()->route('admin.permissions.index');
     }
 

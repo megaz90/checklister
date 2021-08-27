@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Services\AuthorizationService;
+use App\Services\AuthorizationService\AuthorizationService;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AuthorizationPolicy extends AuthorizationService

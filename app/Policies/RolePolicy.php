@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\Role;
 use App\Models\User;
-use App\Services\AuthorizationService;
+use App\Services\AuthorizationService\AuthorizationService;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class RolePolicy extends AuthorizationService

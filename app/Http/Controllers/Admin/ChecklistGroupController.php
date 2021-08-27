@@ -7,6 +7,7 @@ use App\Http\Requests\StoreChecklistGroupRequest;
 use App\Http\Requests\UpdateChecklistGroupRequest;
 use App\Models\Checklist;
 use App\Models\ChecklistGroup;
+use App\Services\ChecklistGroupService\ChecklistGroupService;
 use Illuminate\Http\Request;
 
 class ChecklistGroupController extends Controller
@@ -98,16 +99,7 @@ class ChecklistGroupController extends Controller
 
     public function getAllData(Checklist $checklist)
     {
-        $data = Checklist::where('checklist_group_id', $checklist->checklist_group_id)
-            ->whereNull('user_id')
-            ->withCount(['tasks' => function ($query) {
-                $query->whereNull('user_id');
-            },])
-            ->withCount([('user_tasks') => function ($query) {
-                $query->whereNotNull('completed_at');
-            }])
-            ->get();
-
+        $data = (new ChecklistGroupService())->allData($checklist);
         return response()->json($data);
     }
 }
