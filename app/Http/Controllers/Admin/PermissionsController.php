@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
-use App\Models\ImplementedPermissions;
 use App\Models\Permission;
-use App\Models\Role;
 use App\Services\PermissionService\PermissionService;
 
 class PermissionsController extends Controller

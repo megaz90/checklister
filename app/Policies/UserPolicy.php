@@ -19,7 +19,6 @@ class UserPolicy extends AuthorizationService
     public function viewAny(User $user)
     {
         $data = $this->check($user, "user_access");
-
         return $data != false && $user;
     }
 

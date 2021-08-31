@@ -27,8 +27,8 @@ class PermissionService
             ->update(['permission_id' => $permission->id]);
 
         //Super Admin seeded
-        $super_admin = Role::find(1);
-        $super_admin->permissions()->attach($permission->id);
+        // $super_admin = Role::find(1);
+        // $super_admin->permissions()->attach($permission->id);
 
         return true;
     }

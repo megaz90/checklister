@@ -15,14 +15,7 @@ class PermissionsRolesController extends Controller
     {
         $this->authorize('create', Permission::class);
 
-        if (auth()->user()->is_super_admin == TRUE) {
-            $roles = Role::all()->toArray();
-        } else {
-            $roles = Role::where('id', '!=', 1)
-                ->get()
-                ->toArray();
-        }
-
+        $roles = Role::all()->toArray();
         $permissions = Permission::all();
 
         return view('admin.authorize.permissionRole.create', compact(['roles', 'permissions']));
@@ -62,7 +55,7 @@ class PermissionsRolesController extends Controller
     {
         $this->authorize('update', Permission::class);
 
-        $roles = Role::where('id', '!=', 1)->get();
+        $roles = Role::all();
         $permissions = Permission::all();
 
         return view('admin.authorize.permissionRole.edit', compact(['roles', 'permissions']));

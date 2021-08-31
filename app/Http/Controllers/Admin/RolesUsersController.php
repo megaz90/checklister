@@ -16,9 +16,7 @@ class RolesUsersController extends Controller
     {
         $this->authorize('create', RoleUser::class);
 
-        $roles = Role::where('id', '!=', 1)
-            ->get()
-            ->toArray();
+        $roles = Role::all()->toArray();
 
         if (auth()->user()->is_super_admin == TRUE) {
             $users = User::all()->toArray();
@@ -67,7 +65,7 @@ class RolesUsersController extends Controller
         $this->authorize('update', RoleUser::class);
 
         $users = User::all();
-        $roles = Role::where('id', '!=', 1)->get();
+        $roles = Role::all();
 
         return view('admin.authorize.roleUser.edit', compact(['users', 'roles']));
     }
