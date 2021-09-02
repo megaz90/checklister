@@ -26,6 +26,10 @@ Route::group(['middleware' => ['auth', 'save_last_action_at']], function () {
     Route::get('/task/completed/{checklist}', [App\Http\Controllers\Admin\TaskController::class, 'completedTasks'])->name('task.checkCompleted');
     Route::get('/checklist/all/{checklist}', [App\Http\Controllers\Admin\ChecklistGroupController::class, 'getAllData'])->name('checklistGroupData');
 
+    Route::group(['prefix' => '/subscription', 'as' => 'subscription.'], function () {
+        Route::get('/page', [App\Http\Controllers\User\SubscriptionController::class, 'create'])->name('create');
+    });
+
     Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => 'is_admin'], function () {
         Route::resource('pages', \App\Http\Controllers\Admin\PagesController::class)->only(['edit', 'update']);
         Route::resource('checklist_groups', \App\Http\Controllers\Admin\ChecklistGroupController::class);
