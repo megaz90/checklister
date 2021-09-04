@@ -50,10 +50,13 @@
 @section('scripts')
 <script src="{{ asset('assets/libs/ckeditor/ckeditor.js') }}"></script>
 <script>
+    CKEDITOR.replace( 'task-description' );
+</script>
+{{-- <script>
     ClassicEditor
         .create( document.querySelector( '#task-description' ) )
         .catch( error => {
             console.error( error );
         } );
-</script>
+</script> --}}
 @endsection
