@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePackageRequest;
+use App\Models\Package;
 use Illuminate\Http\Request;
 
 class PackageController extends Controller
@@ -14,7 +16,8 @@ class PackageController extends Controller
      */
     public function index()
     {
-        //
+        $packages = Package::latest()->paginate(10);
+        return view('admin.package.index', compact('packages'));
     }
 
     /**
@@ -24,7 +27,7 @@ class PackageController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.package.create');
     }
 
     /**
@@ -33,9 +36,10 @@ class PackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePackageRequest $request)
     {
-        //
+        Package::create($request->validated());
+        return redirect()->back();
     }
 
     /**
@@ -55,9 +59,9 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Package $package)
     {
-        //
+        return view('admin.package.edit', compact('package'));
     }
 
     /**
@@ -67,9 +71,10 @@ class PackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePackageRequest $request, Package $package)
     {
-        //
+        $package->update($request->validated());
+        return redirect()->route('admin.packages.index');
     }
 
     /**

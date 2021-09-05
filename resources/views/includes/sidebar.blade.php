@@ -54,6 +54,14 @@
                     </a>
                 </li>
                 @endforeach
+                <li class="menu-title" key="t-components">{{__('Other')}}</li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow" key="t-horizontal"><i class="fa fa-money-bill-alt"></i> <span>Package</span></a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('admin.packages.create') }}" key="t-horizontal">Add Package</a></li>
+                        <li><a href="{{ route('admin.packages.index') }}" key="t-horizontal">All Packages</a></li>
+                    </ul>
+                </li>
                 <li class="menu-title" key="t-components">{{__('Manage User Data')}}</li>
                 @can('viewAny', \App\Models\User::class)
                 <li>

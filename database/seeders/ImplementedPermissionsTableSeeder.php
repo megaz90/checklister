@@ -52,6 +52,11 @@ class ImplementedPermissionsTableSeeder extends Seeder
             'role_to_user_access',
             'role_to_user_create',
             'role_to_user_edit',
+            'package_access',
+            'package_create',
+            'package_show',
+            'package_edit',
+            'package_delete',
         ];
 
         foreach ($permissions as $permission) {
