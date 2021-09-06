@@ -11,11 +11,11 @@ class Package extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name', 'description', 'price'
+        'name', 'description', 'price', 'duration'
     ];
 
-    public function subscription()
+    public function subscriptions()
     {
-        return $this->hasMany(Subscription::class);
+        return $this->hasOne(Subscription::class);
     }
 }

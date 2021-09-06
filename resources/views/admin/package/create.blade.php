@@ -38,6 +38,12 @@
                             <input type="number" class="form-control"  placeholder="{{__('Enter Package Price')}}" name="price" value="{{ old('price') }}" step="any">
                             </div>
                         </div>
+                        <div class="row mb-4">
+                            <label for="duration" class="col-sm-3 col-form-label">{{__('Package Duration (Days)')}}:</label>
+                            <div class="col-sm-6">
+                            <input type="number" class="form-control"  placeholder="{{__('Enter Package Duration in Days')}}" name="duration" value="{{ old('price') }}">
+                            </div>
+                        </div>
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary btn-sm w-md">{{__('Create Package')}}</button>
                         </div>

@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\ReauthenticateController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\User\ChecklistController as UserChecklistController;
+use App\Http\Controllers\User\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,7 +43,8 @@ Route::group(['middleware' => ['auth', 'save_last_action_at']], function () {
     Route::get('/checklist/all/{checklist}', [ChecklistGroupController::class, 'getAllData'])->name('checklistGroupData');
 
     Route::group(['prefix' => '/subscription', 'as' => 'subscription.'], function () {
-        Route::get('/page', [App\Http\Controllers\User\SubscriptionController::class, 'create'])->name('create');
+        Route::get('/show', [SubscriptionController::class, 'create'])->name('show');
+        Route::get('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
     });
 
     Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => 'is_admin'], function () {

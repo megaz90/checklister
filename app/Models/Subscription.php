@@ -20,6 +20,7 @@ class Subscription extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->where('is_admin', '0')
+            ->where('is_super_admin', 0);
     }
 }

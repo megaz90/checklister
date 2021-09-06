@@ -27,6 +27,7 @@ class StorePackageRequest extends FormRequest
             'name' => ['required', 'min:3'],
             'description' => ['required', 'min:10'],
             'price' => ['required', 'between:0,9999999.99'],
+            'duration' => ['required', 'integer'],
         ];
     }
 }

@@ -13,41 +13,41 @@
                 </div>
                 <div class="card-body">
                     <div class="accordion" id="accordionExample">
-                        @if (count($checklist->tasks) === 0)
-                            <h2 class="text-center">No Tasks Found</h2>
-                        @else
+                        @if (count($checklist->tasks) != 0)
                         @foreach ($checklist->tasks->whereNull('user_id') as $task)
-                        @if ($task->name == '')
-                            <h2 class="text-center">No Task Found</h2>
-                        @endif
+                        @if ($loop->iteration == 6)
+                            <div class="row mt-5">
+                                <div class="col-md-12 offset-5">
+                                <a href="{{ route('subscription.show') }}" class="btn btn-primary">Subscribe for More Tasks</a>
+                                </div>
+                            </div>
+                        @else
                         <div class="row">
-                        <div class="col-md-1">
-                            {{-- <span class="fa fa-check mt-4"></span> --}}
-                            <input class="form-check-input mt-4 task-check" type="checkbox" data-id={{ $task->id }} data-route="{{ route('task.complete' , $task->id) }}"/>
-                        </div>
-                        <div class="col-md-11">
-                        <div class="accordion-item mt-2">
-                            <h2 class="accordion-header" id="heading{{$task->id}}">
-                                <button class="accordion-button fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$task->id}}" aria-expanded="true" aria-controls="collapse{{$task->id}}">
-                                     {{$task->name}}
-                                </button>
-                            </h2>
-                            <div id="collapse{{$task->id}}" class="accordion-collapse collapse" aria-labelledby="heading{{$task->id}}" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <div class="text-muted">
-                                        {!!$task->description!!}
+                            <div class="col-md-1">
+                                {{-- <span class="fa fa-check mt-4"></span> --}}
+                                <input class="form-check-input mt-4 task-check" type="checkbox" data-id={{ $task->id }} data-route="{{ route('task.complete' , $task->id) }}"/>
+                            </div>
+                            <div class="col-md-11">
+                                <div class="accordion-item mt-2">
+                                    <h2 class="accordion-header" id="heading{{$task->id}}">
+                                        <button class="accordion-button fw-medium collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$task->id}}" aria-expanded="true" aria-controls="collapse{{$task->id}}">
+                                            {{$task->name}}
+                                        </button>
+                                    </h2>
+                                    <div id="collapse{{$task->id}}" class="accordion-collapse collapse" aria-labelledby="heading{{$task->id}}" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="text-muted">
+                                                {!!$task->description!!}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        @endif
                         @endforeach
-                        <div class="row mt-5">
-                            <div class="col-md-12 offset-5">
-                            <a href="{{ route('subscription.create') }}" class="btn btn-primary">Subscribe To get Full Access</a>
-                        </div>
-                        </div>
+                        @else
+                        <h2 class="text-center">No Tasks Found</h2>
                         @endif
                 </div>
                 </div>
