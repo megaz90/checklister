@@ -44,7 +44,7 @@ Route::group(['middleware' => ['auth', 'save_last_action_at']], function () {
 
     Route::group(['prefix' => '/subscription', 'as' => 'subscription.'], function () {
         Route::get('/show', [SubscriptionController::class, 'create'])->name('show');
-        Route::get('/subscribe', [SubscriptionController::class, 'subscribe'])->name('subscribe');
+        Route::get('/subscribe/{package}', [SubscriptionController::class, 'subscribe'])->name('subscribe');
     });
 
     Route::group(['prefix' => '/admin', 'as' => 'admin.', 'middleware' => 'is_admin'], function () {

@@ -21,7 +21,7 @@
                                 <a href="{{ route('subscription.show') }}" class="btn btn-primary">Subscribe for More Tasks</a>
                                 </div>
                             </div>
-                        @else
+                        @elseif($loop->iteration <= 5)
                         <div class="row">
                             <div class="col-md-1">
                                 {{-- <span class="fa fa-check mt-4"></span> --}}
